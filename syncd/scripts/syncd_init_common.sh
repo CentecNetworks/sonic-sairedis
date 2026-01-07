@@ -35,6 +35,11 @@ mkdir -p /var/log/sai_failure_dump/
 # Use bulk APIs in SAI
 # currently disabled since most vendors don't support that yet
 # CMD_ARGS+=" -l"
+# Set bulk support if it is true in CONFIG_DB
+BULK_SUPPORT=$(echo $SYNCD_VARS | jq -r '.bulk_support')
+if [ "$BULK_SUPPORT" == "enable" ]; then
+    CMD_ARGS+=" -l"
+fi
 
 # Set synchronous mode if it is enabled in CONFIG_DB
 SYNC_MODE=$(echo $SYNCD_VARS | jq -r '.synchronous_mode')
