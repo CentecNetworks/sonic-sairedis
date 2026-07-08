@@ -36,6 +36,11 @@ mkdir -p /var/log/sai_failure_dump/
 # Use bulk APIs in SAI
 # currently disabled since most vendors don't support that yet
 # CMD_ARGS+=" -l"
+# Set bulk support if it is true in CONFIG_DB
+BULK_SUPPORT=$(echo $SYNCD_VARS | jq -r '.bulk_support')
+if [ "$BULK_SUPPORT" == "enable" ]; then
+    CMD_ARGS+=" -l"
+fi
 
 # Set zmq mode by default for smartswitch DPU
 # Otherwise, set synchronous mode if it is enabled in CONFIG_DB
